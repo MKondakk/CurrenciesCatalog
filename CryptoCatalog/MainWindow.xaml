@@ -1,0 +1,42 @@
+﻿<Window x:Class="CryptoCatalog.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:CryptoCatalog.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Width="800"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Height="500">
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+    <StackPanel>
+        <materialDesign:ColorZone Padding="16"
+                                  Mode="SecondaryMid">
+            <DockPanel LastChildFill="False">
+                <Button Content="1"
+                        Command="{Binding OpenDetails}"
+                        DockPanel.Dock="Left" />
+                <Button Content="2"
+                        DockPanel.Dock="Left" />
+                <ToggleButton IsChecked="True"
+                              Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                              ToolTip="MaterialDesignSwitchSecondaryToggleButton"
+                              DockPanel.Dock="Right" />
+            </DockPanel>
+        </materialDesign:ColorZone>
+        <Frame x:Name="_frame"
+               NavigationUIVisibility="Hidden"
+               Content="{Binding CurrentPage}" />
+    </StackPanel>
+
+</Window>
