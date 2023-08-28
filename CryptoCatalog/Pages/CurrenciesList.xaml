@@ -11,8 +11,9 @@
         <vm:CurrenciesListViewModel />
     </Page.DataContext>
 
-    <DataGrid CanUserAddRows="False"
+    <DataGrid 
+              IsReadOnly="True"
               ItemsSource="{Binding Currencies}"
               SelectionMode="Single"
-              SelectionUnit="FullRow" />
+              SelectionUnit="FullRow"/>
 </Page>

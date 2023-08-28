@@ -15,7 +15,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Height="500">
+        Height="Auto">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
@@ -23,15 +23,56 @@
         <materialDesign:ColorZone Padding="16"
                                   Mode="SecondaryMid">
             <DockPanel LastChildFill="False">
-                <Button Content="1"
+                <Button Content="TOP-10"
+                        Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                        Command="{Binding OpenList}"
+                        DockPanel.Dock="Left" />
+                <Button Content="Exchange"
+                        Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
                         Command="{Binding OpenDetails}"
                         DockPanel.Dock="Left" />
-                <Button Content="2"
-                        DockPanel.Dock="Left" />
-                <ToggleButton IsChecked="True"
+                <materialDesign:ColorZone Margin="16,0,0,0"
+                                          Padding="8,4,8,4"
+                                          Panel.ZIndex="1"
+                                          materialDesign:ElevationAssist.Elevation="Dp2"
+                                          CornerRadius="2"
+                                          Mode="Standard">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource MaterialDesignToolButton}">
+                            <materialDesign:PackIcon Kind="Search"
+                                                     Opacity=".56" />
+                        </Button>
+                        <TextBox 
+                                 MinWidth="200"
+                                 Margin="8,0,0,0"
+                                 VerticalAlignment="Center"
+                                 materialDesign:HintAssist.Hint="Search"
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                 BorderThickness="0" />
+                    </StackPanel>
+                </materialDesign:ColorZone>
+                <Button Margin="8,0,0,0"
+                        Panel.ZIndex="0"
+                        Style="{StaticResource MaterialDesignToolForegroundButton}">
+                    <materialDesign:PackIcon Kind="Send" />
+                </Button>
+                <ToggleButton Width="50"
+                              IsChecked="True"
                               Style="{StaticResource MaterialDesignSwitchToggleButton}"
                               ToolTip="MaterialDesignSwitchSecondaryToggleButton"
-                              DockPanel.Dock="Right" />
+                              DockPanel.Dock="Right">
+                    <materialDesign:PackIcon Kind="WhiteBalanceSunny" />
+                    <materialDesign:ToggleButtonAssist.SwitchTrackOnBackground>
+                        <SolidColorBrush Color="Black" />
+                    </materialDesign:ToggleButtonAssist.SwitchTrackOnBackground>
+                    <materialDesign:ToggleButtonAssist.SwitchTrackOffBackground>
+                        <SolidColorBrush Color="Black" />
+                    </materialDesign:ToggleButtonAssist.SwitchTrackOffBackground>
+                    <materialDesign:ToggleButtonAssist.OnContent>
+                        <materialDesign:PackIcon Kind="WeatherNight" />
+                    </materialDesign:ToggleButtonAssist.OnContent>
+                    
+                </ToggleButton>
             </DockPanel>
         </materialDesign:ColorZone>
         <Frame x:Name="_frame"

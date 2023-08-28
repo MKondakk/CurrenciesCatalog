@@ -17,12 +17,14 @@ namespace CryptoCatalog.ViewModels
                 OnPropertyChanged("CurrentPage");
             }
         }
-
         public ICommand OpenDetails { get; }
+        public ICommand OpenList { get; }
+
 
         public MainWindowViewModel()
         {
             OpenDetails = new CommandImplementation(_ => { CurrentPage = new CurrencyDetails(); });
+            OpenList = new CommandImplementation(_ => { CurrentPage = new CurrenciesList(); });
         }
     }
 }

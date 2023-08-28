@@ -3,13 +3,13 @@
 namespace CryptoCatalog.Models
 {
     public record Currency(
- string rank,
- string symbol,
- string name,
- string priceUsd
-);
+         string Rank,
+         string Symbol,
+         string Name,
+         string PriceUsd
+    );
 
     public record CurrencyResponse(
- IReadOnlyList<Currency> data
- );
+        IReadOnlyList<Currency> data
+    );
 }
