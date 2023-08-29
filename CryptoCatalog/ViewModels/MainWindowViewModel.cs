@@ -1,30 +1,39 @@
-﻿using System.Windows.Controls;
+﻿using System;
 using System.Windows.Input;
-using CryptoCatalog.Pages;
+using CryptoCatalog.Models;
 
 namespace CryptoCatalog.ViewModels
 {
-    internal class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
-        private Page currentPage = new CurrenciesList();
+        private ViewModelBase currentPageViewModel;
+        private CurrencyDetailsViewModel currencyDetailsViewModel;
+        private CurrenciesListViewModel currenciesListViewModel;
 
-        public Page CurrentPage
+        public ViewModelBase CurrentPageViewModel
         {
-            get { return currentPage; }
+            get { return currentPageViewModel; }
             set
             {
-                currentPage = value;
-                OnPropertyChanged("CurrentPage");
+                currentPageViewModel = value;
+                OnPropertyChanged("CurrentPageViewModel");
             }
         }
-        public ICommand OpenDetails { get; }
         public ICommand OpenList { get; }
 
+        public MainWindowViewModel(CurrencyDetailsViewModel currencyDetailsViewModel, CurrenciesListViewModel currenciesListViewModel)
+        {          
+            this.currencyDetailsViewModel = currencyDetailsViewModel;
+            this.currenciesListViewModel = currenciesListViewModel;
+            CurrentPageViewModel = currenciesListViewModel;
+            currenciesListViewModel.CustomEvent += OnNavigateDetails;
+            OpenList = new CommandImplementation(_ => { CurrentPageViewModel = currenciesListViewModel; });
+        }
 
-        public MainWindowViewModel()
-        {
-            OpenDetails = new CommandImplementation(_ => { CurrentPage = new CurrencyDetails(); });
-            OpenList = new CommandImplementation(_ => { CurrentPage = new CurrenciesList(); });
+        private void OnNavigateDetails(object? sender, EventArgs e)
+        {          
+            currencyDetailsViewModel.Currency = currenciesListViewModel.SelectedCurrency;
+            CurrentPageViewModel = currencyDetailsViewModel;
         }
     }
 }

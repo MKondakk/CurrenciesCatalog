@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CryptoCatalog.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,19 @@ namespace CryptoCatalog.ViewModels
     /// <summary>
     /// Currency Details Page ViewModel
     /// </summary>
-    internal class CurrencyDetailsViewModel
+    public class CurrencyDetailsViewModel : ViewModelBase
     {
+        private Currency _currency;
+
+        public Currency Currency
+        {
+            get => _currency;
+            set
+            {
+                _currency = value;
+                OnPropertyChanged(nameof(Currency));
+            }
+        }
 
     }
 }

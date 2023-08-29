@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:vm="clr-namespace:CryptoCatalog.ViewModels"
+        xmlns:pages="clr-namespace:CryptoCatalog.Pages"
         mc:Ignorable="d"
         Title="MainWindow"
         Width="800"
@@ -16,9 +17,17 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         Height="Auto">
-    <Window.DataContext>
-        <vm:MainWindowViewModel />
-    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:CurrenciesListViewModel}">
+            <pages:CurrenciesList />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type vm:CurrencyDetailsViewModel}">
+            <pages:CurrencyDetails />
+        </DataTemplate>
+    </Window.Resources>
+
     <StackPanel>
         <materialDesign:ColorZone Padding="16"
                                   Mode="SecondaryMid">
@@ -42,8 +51,7 @@
                             <materialDesign:PackIcon Kind="Search"
                                                      Opacity=".56" />
                         </Button>
-                        <TextBox 
-                                 MinWidth="200"
+                        <TextBox MinWidth="200"
                                  Margin="8,0,0,0"
                                  VerticalAlignment="Center"
                                  materialDesign:HintAssist.Hint="Search"
@@ -71,13 +79,12 @@
                     <materialDesign:ToggleButtonAssist.OnContent>
                         <materialDesign:PackIcon Kind="WeatherNight" />
                     </materialDesign:ToggleButtonAssist.OnContent>
-                    
+
                 </ToggleButton>
             </DockPanel>
         </materialDesign:ColorZone>
-        <Frame x:Name="_frame"
-               NavigationUIVisibility="Hidden"
-               Content="{Binding CurrentPage}" />
+        <Frame Content="{Binding CurrentPageViewModel}"
+               NavigationUIVisibility="Hidden"/>
     </StackPanel>
 
 </Window>

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Windows.Input;
 using CryptoCatalog.Models;
 
 namespace CryptoCatalog.ViewModels
@@ -10,13 +10,35 @@ namespace CryptoCatalog.ViewModels
     /// <summary>
     /// Currencies List Page ViewModel
     /// </summary>
-    internal class CurrenciesListViewModel
+    public class CurrenciesListViewModel : ViewModelBase
     {
+        public event EventHandler CustomEvent;
+
+        private Currency selectedCurrency;
+
+        public Currency SelectedCurrency
+        {
+            get { return selectedCurrency; }
+            set
+            {
+                selectedCurrency = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<Currency> Currencies { get; set; }
+        public ICommand OpenDetails { get; }
 
         public CurrenciesListViewModel()
         {
+            OpenDetails = new CommandImplementation(selectedCurrency =>
+            {
+                if (selectedCurrency is Currency)
+                {
+                    SelectedCurrency = (Currency)selectedCurrency;
+                }
+                CustomEvent?.Invoke(this, EventArgs.Empty);
+            });
             Currencies = new ObservableCollection<Currency>();
 
             // TODO: move from ctor

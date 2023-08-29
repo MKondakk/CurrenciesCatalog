@@ -3,10 +3,17 @@
 namespace CryptoCatalog.Models
 {
     public record Currency(
-         string Rank,
-         string Symbol,
-         string Name,
-         string PriceUsd
+         string id,       
+         string rank,
+         string symbol,
+         string name,
+         string supply,
+         string maxSupply,
+         string marketCapUsd,
+         string volumeUsd24Hr,
+         double priceUsd,
+         string changePercent24Hr,
+         string vwap24Hr
     );
 
     public record CurrencyResponse(
