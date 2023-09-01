@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using CryptoCatalog.Models;
 
@@ -45,22 +47,28 @@ namespace CryptoCatalog.ViewModels
             FetchCurrencies();
         }
 
-        private async void FetchCurrencies()
+        async private Task FetchCurrencies()
         {
-            var client = new HttpClient(
+            var client = new HttpClient() { BaseAddress = new Uri("https://api.coincap.io") };
 
-            )
-            { BaseAddress = new Uri("https://api.coincap.io") };
-
-            var response = await client.GetFromJsonAsync<CurrencyResponse>("v2/assets?limit=10");
-
-            if (response == null) { return; }
-
-            foreach (var item in response.data)
+            try
             {
-                Currencies.Add(item);
+                var response = await client.GetAsync("v2/assets?limit=15");
+
+                var result = await response.Content.ReadFromJsonAsync<CurrencyResponse>().ConfigureAwait(false);
+
+                if (result == null) { return; }
+
+                foreach (var item in result.data)
+                {
+                    Currencies.Add(item);
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("Error loading");
             }
         }
-
     }
 }

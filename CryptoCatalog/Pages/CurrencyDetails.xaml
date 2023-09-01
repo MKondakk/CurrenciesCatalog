@@ -6,9 +6,8 @@
       xmlns:local="clr-namespace:CryptoCatalog.Pages"
       xmlns:vm="clr-namespace:CryptoCatalog.ViewModels"
       mc:Ignorable="d"
-      d:DesignHeight="600"
-      d:DesignWidth="800"
-      Height="Auto"
+      d:DesignHeight="610"
+      d:DesignWidth="1100"
       Title="CurrencyDetails">
 
     <Grid>
@@ -31,13 +30,30 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 BorderBrush="DarkCyan"
-                BorderThickness="1"
+                BorderThickness="0.5"
                 Margin="5">
-            <StackPanel>
-                <Label Content="{Binding Currency.name}"
-                       HorizontalAlignment="Center"/>
-                <Label Content="symbol"
-                       HorizontalAlignment="Center"/>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0"
+                                     EndPoint="1,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <RotateTransform Angle="90" />
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#00bcd4"
+                                  Offset="0.01" />
+                    <GradientStop Color="#004b55"
+                                  Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <TextBlock Text="{Binding Currency.name}"
+                           Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                           Foreground="White"
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Currency.symbol}"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Foreground="LightBlue"
+                            HorizontalAlignment="Center"/>
             </StackPanel>
         </Border>
         
@@ -46,13 +62,30 @@
                 Grid.Column="2"
                 Grid.ColumnSpan="2"
                 BorderBrush="DarkCyan"
-                BorderThickness="1"
-                Margin="5">
-            <StackPanel>
-                <Label Content="Price"
-                       HorizontalAlignment="Center" />
-                <Label Content="---"
-                       HorizontalAlignment="Center" />
+                BorderThickness="0.5"
+                Margin="0,5,0,5">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0"
+                                     EndPoint="1,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <RotateTransform Angle="90" />
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#00bcd4"
+                                  Offset="0.01" />
+                    <GradientStop Color="#004b55"
+                                  Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <TextBlock Text="PriceUSD"
+                           Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                           Foreground="White"
+                           HorizontalAlignment="Center" />
+                <TextBlock Text="{Binding Currency.priceUsd, StringFormat=${0:N5}}"
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                           Foreground="LightBlue"
+                           HorizontalAlignment="Center" />
             </StackPanel>
         </Border>
 
@@ -61,38 +94,104 @@
                 Grid.Column="4"
                 Grid.ColumnSpan="2"
                 BorderBrush="DarkCyan"
-                BorderThickness="1"
+                BorderThickness="0.5"
                 Margin="5">
-            <StackPanel>
-                <Label Content="Volume"
+            <Border.Background>
+    <LinearGradientBrush StartPoint="0,0"
+                         EndPoint="1,0">
+        <LinearGradientBrush.RelativeTransform>
+            <RotateTransform Angle="90" />
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Color="#00bcd4"
+                      Offset="0.01" />
+        <GradientStop Color="#004b55"
+                      Offset="1" />
+    </LinearGradientBrush>
+</Border.Background>
+            <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <TextBlock Text="Volume24Hr"
+                       Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                       Foreground="White"
                        HorizontalAlignment="Center" />
-                <Label Content="---"
-                       HorizontalAlignment="Center" />
+                <TextBlock Text="{Binding Currency.volumeUsd24Hr, StringFormat=${0:N3}}"
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                           Foreground="LightBlue"
+                           HorizontalAlignment="Center" />
             </StackPanel>
         </Border>
-
+        
         <!-- Row 1, Column 0-2 -->
         <Border Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                BorderBrush="DarkCyan"
-                BorderThickness="1"
-                Margin="5">
+                Margin="5,0,5,5">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0"
+                                     EndPoint="1,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <RotateTransform Angle="90" />
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#004b55"
+                                  Offset="0.01" />
+                    <GradientStop Color="Transparent"
+                                  Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
             <StackPanel>
-                <Label Content="Markets"
-                       HorizontalAlignment="Center" />
-                <Grid>
-                    <Label Content="markets grid"/>
-                </Grid>
+                <TextBlock Text="Markets"
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                           Foreground="#e6f6fe"
+                           Margin="10"
+                           HorizontalAlignment="Center" />
+                <ListView ItemsSource="{Binding Markets}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Name"
+                                  DisplayMemberBinding="{Binding exchangeId}" />
+                            <GridViewColumn Header="PriceUSD">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding priceUsd, StringFormat=${0:N5}}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Volume24Hr">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding volumeUsd24Hr, StringFormat=${0:N5}}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="VolumePercent">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding volumePercent, StringFormat=%{0:N3}}" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </StackPanel>
         </Border>
         <!-- Row 1, Column 3-5 -->
         <Border Grid.Row="1"
                 Grid.Column="3"
                 Grid.ColumnSpan="3"
-                BorderBrush="DarkCyan"
-                BorderThickness="1"
-                Margin="5">
+                Margin="0,0,5,5">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0"
+                                     EndPoint="1,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <RotateTransform Angle="90" />
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#004b55"
+                                  Offset="0.01" />
+                    <GradientStop Color="Transparent"
+                                  Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
             <StackPanel>
                 <Label Content="Candles"
                        HorizontalAlignment="Center" />

@@ -10,9 +10,9 @@ namespace CryptoCatalog.Models
          string supply,
          string maxSupply,
          string marketCapUsd,
-         string volumeUsd24Hr,
+         double volumeUsd24Hr,
          double priceUsd,
-         string changePercent24Hr,
+         double changePercent24Hr,
          string vwap24Hr
     );
 
