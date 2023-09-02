@@ -3,12 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:CryptoCatalog.Pages"
-      xmlns:vm="clr-namespace:CryptoCatalog.ViewModels"
+      xmlns:c="clr-namespace:CryptoCatalog.Converters"
       mc:Ignorable="d"
       d:DesignHeight="610"
       d:DesignWidth="1100"
       Title="CurrencyDetails">
+    <Page.Resources>
+        <c:ChangePercentColorConverter x:Key="ChangePercentColorConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -86,6 +88,10 @@
                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                            Foreground="LightBlue"
                            HorizontalAlignment="Center" />
+                <TextBlock Text="{Binding Currency.changePercent24Hr, StringFormat={}{0:0.00}%}"
+                           Foreground="{Binding Currency.changePercent24Hr, Converter={StaticResource ChangePercentColorConverter}}"
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            HorizontalAlignment="Center" />
             </StackPanel>
         </Border>
 
@@ -114,17 +120,17 @@
                        Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                        Foreground="White"
                        HorizontalAlignment="Center" />
-                <TextBlock Text="{Binding Currency.volumeUsd24Hr, StringFormat=${0:N3}}"
+                <TextBlock Text="{Binding Currency.volumeUsd24Hr, StringFormat=${0:N5}}"
                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                            Foreground="LightBlue"
                            HorizontalAlignment="Center" />
             </StackPanel>
         </Border>
         
-        <!-- Row 1, Column 0-2 -->
+        <!-- Row 1, Column 0-5 -->
         <Border Grid.Row="1"
                 Grid.Column="0"
-                Grid.ColumnSpan="3"
+                Grid.ColumnSpan="6"
                 Margin="5,0,5,5">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0"
@@ -148,7 +154,7 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Name"
-                                  DisplayMemberBinding="{Binding exchangeId}" />
+                                            DisplayMemberBinding="{Binding exchangeId}" />
                             <GridViewColumn Header="PriceUSD">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -166,7 +172,7 @@
                             <GridViewColumn Header="VolumePercent">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding volumePercent, StringFormat=%{0:N3}}" />
+                                        <TextBlock Text="{Binding volumePercent, StringFormat={}{0:0.000}%}" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -175,30 +181,5 @@
                 </ListView>
             </StackPanel>
         </Border>
-        <!-- Row 1, Column 3-5 -->
-        <Border Grid.Row="1"
-                Grid.Column="3"
-                Grid.ColumnSpan="3"
-                Margin="0,0,5,5">
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,0"
-                                     EndPoint="1,0">
-                    <LinearGradientBrush.RelativeTransform>
-                        <RotateTransform Angle="90" />
-                    </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#004b55"
-                                  Offset="0.01" />
-                    <GradientStop Color="Transparent"
-                                  Offset="1" />
-                </LinearGradientBrush>
-            </Border.Background>
-            <StackPanel>
-                <Label Content="Candles"
-                       HorizontalAlignment="Center" />
-                <Label Content="???"
-                       HorizontalAlignment="Center" />
-            </StackPanel>
-        </Border>
-
     </Grid>
 </Page>

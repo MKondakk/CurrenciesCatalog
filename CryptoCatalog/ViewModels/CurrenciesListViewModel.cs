@@ -14,36 +14,24 @@ namespace CryptoCatalog.ViewModels
     /// </summary>
     public class CurrenciesListViewModel : ViewModelBase
     {
-        public event EventHandler CustomEvent;
-
-        private Currency selectedCurrency;
-
-        public Currency SelectedCurrency
-        {
-            get { return selectedCurrency; }
-            set
-            {
-                selectedCurrency = value;
-                OnPropertyChanged();
-            }
-        }
+        public event EventHandler<Currency> NavigateDetails;
 
         public ObservableCollection<Currency> Currencies { get; set; }
+
         public ICommand OpenDetails { get; }
 
         public CurrenciesListViewModel()
         {
-            OpenDetails = new CommandImplementation(selectedCurrency =>
+            OpenDetails = new CommandImplementation(o =>
             {
-                if (selectedCurrency is Currency)
+                if (o is Currency selectedCurrency)
                 {
-                    SelectedCurrency = (Currency)selectedCurrency;
+                    NavigateDetails?.Invoke(this, selectedCurrency);
                 }
-                CustomEvent?.Invoke(this, EventArgs.Empty);
             });
+
             Currencies = new ObservableCollection<Currency>();
 
-            // TODO: move from ctor
             FetchCurrencies();
         }
 
@@ -55,7 +43,7 @@ namespace CryptoCatalog.ViewModels
             {
                 var response = await client.GetAsync("v2/assets?limit=15");
 
-                var result = await response.Content.ReadFromJsonAsync<CurrencyResponse>().ConfigureAwait(false);
+                var result = await response.Content.ReadFromJsonAsync<CurrencyResponse>();
 
                 if (result == null) { return; }
 

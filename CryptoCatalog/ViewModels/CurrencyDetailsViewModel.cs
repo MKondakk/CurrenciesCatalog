@@ -20,16 +20,17 @@ namespace CryptoCatalog.ViewModels
             get => _currency;
             set
             {
-                _currency = value;
-                FetchMarkets(Currency.id);
-                OnPropertyChanged(nameof(Currency));
+                SetProperty(ref _currency, value);
+                FetchMarkets(value.id);
             }
         }
         public ObservableCollection<Market> Markets { get; set; }
+
         public CurrencyDetailsViewModel()
         {
             Markets = new ObservableCollection<Market>();
         }
+
         private async void FetchMarkets(string currencyId)
         {
             Markets.Clear();

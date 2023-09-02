@@ -3,10 +3,9 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-
-namespace CryptoCatalog
+namespace CryptoCatalog.Converters
 {
-   public class ChangePercentColorConverter : IValueConverter
+    public class ChangePercentColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -17,7 +16,7 @@ namespace CryptoCatalog
                 else if (changePercent > 0)
                     return Brushes.MediumSpringGreen;
             }
-            return Brushes.White; 
+            return Brushes.White;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

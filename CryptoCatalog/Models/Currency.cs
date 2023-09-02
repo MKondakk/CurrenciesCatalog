@@ -2,8 +2,14 @@
 
 namespace CryptoCatalog.Models
 {
+    public record BaseCurrency(
+         string id,
+         string symbol,
+         string name
+    );
+
     public record Currency(
-         string id,       
+         string id,
          string rank,
          string symbol,
          string name,
@@ -14,7 +20,7 @@ namespace CryptoCatalog.Models
          double priceUsd,
          double changePercent24Hr,
          string vwap24Hr
-    );
+    ) : BaseCurrency(id, symbol, name);
 
     public record CurrencyResponse(
         IReadOnlyList<Currency> data
